@@ -18,8 +18,9 @@ mod test {
   use lexer::lex;
   use tokenizer::Block;
   use tokenizer::Heading;
+
   #[test]
-  fn test_heading_level_1() {
+  fn lex_heading() {
     assert_eq!(
       lex("# hello world"),
       vec![Block::Heading(Heading {
@@ -27,32 +28,6 @@ mod test {
         raw: "# hello world",
         text: "hello world",
         depth: 1,
-      })]
-    );
-  }
-
-  #[test]
-  fn test_heading_level_2() {
-    assert_eq!(
-      lex("## hello world"),
-      vec![Block::Heading(Heading {
-        token_type: "heading",
-        raw: "## hello world",
-        text: "hello world",
-        depth: 2,
-      })]
-    );
-  }
-
-  #[test]
-  fn test_heading_level_3() {
-    assert_eq!(
-      lex("### hello world ##"),
-      vec![Block::Heading(Heading {
-        token_type: "heading",
-        raw: "### hello world ##",
-        text: "hello world",
-        depth: 3,
       })]
     );
   }

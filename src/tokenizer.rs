@@ -33,47 +33,47 @@ pub fn heading(line: &str) -> Option<Block> {
 #[cfg(test)]
 mod test {
   use tokenizer::{heading, Block, Heading};
+
   #[test]
-  fn test_heading_level_1() {
+  fn heading_level() {
     assert_eq!(
-      heading("# hello world"),
-      Some(Block::Heading(Heading {
+      heading("# hello world").unwrap(),
+      Block::Heading(Heading {
         token_type: "heading",
         raw: "# hello world",
         text: "hello world",
         depth: 1,
-      }))
+      })
     );
-  }
 
-  #[test]
-  fn test_heading_level_2() {
     assert_eq!(
-      heading("## hello world"),
-      Some(Block::Heading(Heading {
+      heading("## hello world").unwrap(),
+      Block::Heading(Heading {
         token_type: "heading",
         raw: "## hello world",
         text: "hello world",
         depth: 2,
-      }))
+      })
     );
   }
 
   #[test]
-  fn test_heading_level_3() {
+  fn ignores_closing_hashes() {
     assert_eq!(
-      heading("### hello world ##"),
-      Some(Block::Heading(Heading {
+      heading("### hello world ##").unwrap(),
+      Block::Heading(Heading {
         token_type: "heading",
         raw: "### hello world ##",
         text: "hello world",
         depth: 3,
-      }))
+      })
     );
   }
 
   #[test]
-  fn test_heading_level_7() {
+  fn not_heading() {
     assert_eq!(heading("####### hello world"), None);
+    assert_eq!(heading("hello world"), None);
+    assert_eq!(heading("hello world ##"), None);
   }
 }
