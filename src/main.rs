@@ -1,3 +1,9 @@
+#[macro_use]
+extern crate lazy_static;
+
+mod lexer;
+mod tokenizer;
+
 use std::env;
 use std::fs;
 use std::io::Read;
@@ -16,8 +22,8 @@ fn main() -> std::io::Result<()> {
 
       let mut contents = String::new();
       file.read_to_string(&mut contents).unwrap();
-      println!("读取到的 Markdown 内容是 {}", contents);
-
+      let tokens = lexer::lex(&contents);
+      println!("{:?}", tokens);
       Ok(())
     } else {
       panic!("请选择 Markdown 文件")
