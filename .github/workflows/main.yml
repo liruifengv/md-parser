@@ -1,4 +1,4 @@
-name: lint
+name: main
 on:
   push:
     branches: [main]
@@ -53,13 +53,11 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: ${{ matrix.toolchain }}
-          components: rustfmt, clippy
+          toolchain: nightly
       - uses: actions/checkout@v3
-        with:
-          submodules: true
       - name: cargo test
         uses: actions-rs/cargo@v1
         with:
+          toolchain: nightly
           command: test
           args: --locked --all-features --all-targets
